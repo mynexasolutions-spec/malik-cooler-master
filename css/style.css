@@ -16,6 +16,8 @@
   --border: #dce6ef;
   --wa-green: #25d366;
   --wa-dark: #1da851;
+  --call-blue: #0078ff;
+  --call-dark: #0060cc;
 
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -188,6 +190,14 @@ button {
 
 .section-header.light .section-label {
   color: var(--teal);
+}
+
+.section-header.centered {
+  text-align: center;
+}
+
+.section-header.centered .section-label {
+  justify-content: center;
 }
 
 /* Image placeholder */
@@ -525,6 +535,9 @@ button {
   border-radius: var(--radius);
   overflow: hidden;
   transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .service-card:hover {
@@ -541,6 +554,9 @@ button {
 
 .service-body {
   padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-tag {
@@ -567,15 +583,29 @@ button {
   margin-bottom: 14px;
 }
 
-.service-wa {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--wa-green);
-  transition: color 0.2s;
+.service-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Sticks to bottom */
+  padding-top: 12px;
 }
 
-.service-wa:hover {
-  color: var(--wa-dark);
+.btn-service-wa {
+  background: var(--wa-green);
+  color: var(--white);
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 50px; /* Rounded pill shape */
+  transition: background 0.2s, transform 0.2s;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-service-wa:hover {
+  background: var(--wa-dark);
+  color: var(--white);
+  transform: translateY(-2px);
 }
 
 
@@ -697,12 +727,35 @@ button {
 .reviews {
   background: var(--off-white);
   padding: 72px 0;
+  overflow: hidden; /* Hide overflow for ticker */
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+.reviews-ticker {
+  display: flex;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.reviews-track {
+  display: flex;
+  gap: 20px;
+  animation: reviews-slide 40s linear infinite;
+  width: max-content;
+  align-items: stretch; /* Cards will be equal height, which is good for tickers */
+}
+
+/* Pause on hover */
+.reviews-ticker:hover .reviews-track {
+  animation-play-state: paused;
+}
+
+@keyframes reviews-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .review-card {
@@ -710,6 +763,11 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
+  width: 320px; /* Fixed width for ticker items */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px; /* Consistent minimum height */
 }
 
 .stars {
@@ -719,17 +777,19 @@ button {
   margin-bottom: 12px;
 }
 
-.review-card>p {
+.review-card > p {
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.7;
   margin-bottom: 20px;
+  flex: 1;
 }
 
 .reviewer {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-top: auto;
 }
 
 .reviewer-avatar {
@@ -768,6 +828,7 @@ button {
 
 .faq-list {
   max-width: 720px;
+  margin: 0 auto; /* Center the list */
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -970,6 +1031,28 @@ button {
 /* =============================================
    FLOATING WHATSAPP BUTTON
    ============================================= */
+.float-call {
+  position: fixed;
+  bottom: 92px; /* Above WhatsApp icon (56px + 24px + 12px gap) */
+  right: 20px;
+  z-index: 200;
+  width: 56px;
+  height: 56px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 184, 169, 0.3);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.float-call:hover {
+  background: var(--teal-dark);
+  transform: scale(1.08);
+}
+
 .float-wa {
   position: fixed;
   bottom: 24px;
@@ -998,10 +1081,6 @@ button {
    ============================================= */
 @media (min-width: 600px) {
   .services-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .reviews-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -1084,11 +1163,6 @@ button {
   .step-arrow {
     transform: rotate(0deg);
     padding: 0 8px;
-  }
-
-  /* Reviews */
-  .reviews-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   /* Contact */
