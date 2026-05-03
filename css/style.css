@@ -10,14 +10,15 @@
   --teal: #00b8a9;
   --teal-dark: #009e91;
   --white: #ffffff;
-  --off-white: #f4f7f9;
-  --text: #1a2a3a;
+  --off-white: #f8fafc;
+  --text: #0d1f3c;
   --text-muted: #5a6e82;
-  --border: #dce6ef;
+  --border: #e2e8f0;
   --wa-green: #25d366;
   --wa-dark: #1da851;
-  --call-blue: #0078ff;
-  --call-dark: #0060cc;
+  --call-blue: #00b8a9;
+  --call-dark: #009e91;
+  --light-blue: #f0f7ff;
 
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -118,11 +119,13 @@ button {
   stroke-width: 2px;
   vertical-align: middle;
 }
+
 .btn-icon {
   margin-right: 8px;
   width: 1.1em;
   height: 1.1em;
 }
+
 .inline-icon {
   margin-right: 6px;
   width: 1em;
@@ -222,8 +225,8 @@ button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--navy);
-  border-bottom: 2px solid var(--navy-mid);
+  background: var(--teal);
+  border-bottom: 1px solid var(--teal-dark);
 }
 
 .nav-inner {
@@ -245,7 +248,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--teal);
+  color: var(--white);
 }
 
 .logo-icon .lucide {
@@ -264,6 +267,10 @@ button {
   color: var(--teal);
 }
 
+.navbar .logo-text strong {
+  color: var(--navy);
+}
+
 .nav-links {
   display: none;
   gap: 28px;
@@ -271,14 +278,14 @@ button {
 }
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: var(--teal);
+  color: var(--navy);
 }
 
 .btn-nav-wa {
@@ -320,24 +327,26 @@ button {
 .mobile-menu {
   display: flex;
   flex-direction: column;
-  background: var(--navy-mid);
+  background: var(--teal);
   max-height: 0;
   overflow: hidden;
   opacity: 0;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  border-bottom: 1px solid var(--teal-dark);
 }
 
 .mobile-menu.open {
-  max-height: 500px; /* Sufficient height for all menu items */
+  max-height: 500px;
+  /* Sufficient height for all menu items */
   opacity: 1;
 }
 
 .mob-link {
   padding: 13px 24px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--white);
   font-size: 0.95rem;
   font-weight: 500;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: color 0.2s, background 0.2s;
 }
 
@@ -356,8 +365,8 @@ button {
    HERO
    ============================================= */
 .hero {
-  background: var(--navy);
-  padding-top: 56px;
+  background: var(--white);
+  padding-top: 64px;
   padding-bottom: 0;
   overflow: hidden;
 }
@@ -366,7 +375,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding-bottom: 56px;
+  padding-bottom: 64px;
 }
 
 .hero-eyebrow {
@@ -381,7 +390,7 @@ button {
 .hero-headline {
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 9vw, 4rem);
-  color: var(--white);
+  color: var(--navy);
   line-height: 1.1;
   margin-bottom: 18px;
 }
@@ -393,7 +402,7 @@ button {
 
 .hero-sub {
   font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   line-height: 1.65;
   max-width: 480px;
   margin-bottom: 32px;
@@ -406,14 +415,14 @@ button {
 }
 
 .hero-ctas .btn-outline {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: var(--white);
+  border-color: var(--border);
+  color: var(--navy);
 }
 
 .hero-ctas .btn-outline:hover {
-  border-color: var(--white);
-  background: var(--white);
-  color: var(--navy);
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
 }
 
 .hero-image-block {
@@ -592,7 +601,8 @@ button {
 .service-footer {
   display: flex;
   justify-content: center;
-  margin-top: auto; /* Sticks to bottom */
+  margin-top: auto;
+  /* Sticks to bottom */
   padding-top: 12px;
 }
 
@@ -602,7 +612,8 @@ button {
   padding: 10px 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  border-radius: 50px; /* Rounded pill shape */
+  border-radius: 50px;
+  /* Rounded pill shape */
   transition: background 0.2s, transform 0.2s;
   width: 100%;
   text-align: center;
@@ -689,7 +700,7 @@ button {
    ============================================= */
 .wa-banner {
   background: var(--wa-green);
-  padding: 40px 0;
+  padding: 64px 0;
 }
 
 .wa-banner-inner {
@@ -707,7 +718,7 @@ button {
 }
 
 .wa-text p {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
 }
 
@@ -719,10 +730,11 @@ button {
   font-size: 1rem;
   border-radius: var(--radius);
   white-space: nowrap;
-  transition: transform 0.15s;
+  transition: transform 0.15s, background 0.2s;
 }
 
 .btn-wa-big:hover {
+  background: var(--white);
   transform: scale(1.03);
 }
 
@@ -733,7 +745,8 @@ button {
 .reviews {
   background: var(--off-white);
   padding: 72px 0;
-  overflow: hidden; /* Hide overflow for ticker */
+  overflow: hidden;
+  /* Hide overflow for ticker */
 }
 
 .reviews-ticker {
@@ -747,7 +760,8 @@ button {
   gap: 20px;
   animation: reviews-slide 40s linear infinite;
   width: max-content;
-  align-items: stretch; /* Cards will be equal height, which is good for tickers */
+  align-items: stretch;
+  /* Cards will be equal height, which is good for tickers */
 }
 
 /* Pause on hover */
@@ -759,6 +773,7 @@ button {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -769,11 +784,13 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
-  width: 320px; /* Fixed width for ticker items */
+  width: 320px;
+  /* Fixed width for ticker items */
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  min-height: 240px; /* Consistent minimum height */
+  min-height: 240px;
+  /* Consistent minimum height */
 }
 
 .stars {
@@ -783,7 +800,7 @@ button {
   margin-bottom: 12px;
 }
 
-.review-card > p {
+.review-card>p {
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.7;
@@ -834,7 +851,8 @@ button {
 
 .faq-list {
   max-width: 720px;
-  margin: 0 auto; /* Center the list */
+  margin: 0 auto;
+  /* Center the list */
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -1039,7 +1057,8 @@ button {
    ============================================= */
 .float-call {
   position: fixed;
-  bottom: 92px; /* Above WhatsApp icon (56px + 24px + 12px gap) */
+  bottom: 92px;
+  /* Above WhatsApp icon (56px + 24px + 12px gap) */
   right: 20px;
   z-index: 200;
   width: 56px;
