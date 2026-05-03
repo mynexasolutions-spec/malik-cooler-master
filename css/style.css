@@ -19,7 +19,7 @@
   --call-blue: #0078ff;
   --call-dark: #0060cc;
 
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 
   --radius: 4px;
@@ -1187,7 +1187,5 @@ button {
    RESPONSIVE — LARGE (1100px+)
    ============================================= */
 @media (min-width: 1100px) {
-  .services-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  /* Services grid remains 3 columns for 9 cards layout */
 }
