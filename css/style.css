@@ -25,6 +25,7 @@
 
   --radius: 4px;
   --shadow: 0 2px 16px rgba(13, 31, 60, 0.10);
+  --shadow-lg: 0 10px 30px rgba(13, 31, 60, 0.15);
 }
 
 /* ---------- RESET ---------- */
@@ -124,6 +125,42 @@ button {
   margin-right: 8px;
   width: 1.1em;
   height: 1.1em;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--white);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0, 184, 169, 0.1);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .inline-icon {
@@ -244,16 +281,20 @@ button {
   flex-shrink: 0;
 }
 
-.logo-icon {
+.logo-img-wrap {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  overflow: hidden;
+  border-radius: 4px;
 }
 
-.logo-icon .lucide {
-  width: 1.6rem;
-  height: 1.6rem;
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .logo-text {
@@ -538,9 +579,10 @@ button {
 }
 
 .services-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 
 .service-card {
@@ -550,7 +592,7 @@ button {
   transition: box-shadow 0.2s, transform 0.2s;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  width: 100%;
 }
 
 .service-card:hover {
@@ -700,26 +742,42 @@ button {
    ============================================= */
 .wa-banner {
   background: var(--wa-green);
-  padding: 64px 0;
+  padding: 80px 0;
 }
 
 .wa-banner-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
 }
 
 .wa-text h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-size: clamp(2rem, 6vw, 3rem);
   color: var(--white);
-  margin-bottom: 6px;
+  line-height: 1.1;
+  margin-bottom: 12px;
 }
 
 .wa-text p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.wa-form-card {
+  background: var(--white);
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(13, 31, 60, 0.15);
+}
+
+.wa-form-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--navy);
+  margin-bottom: 20px;
 }
 
 .btn-wa-big {
@@ -932,6 +990,27 @@ button {
   gap: 40px;
 }
 
+.contact-form-wrap {
+  background: var(--white);
+  padding: 32px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.contact-form-wrap h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.contact-form-wrap p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
 .contact-list {
   display: flex;
   flex-direction: column;
@@ -1011,8 +1090,12 @@ button {
   text-align: center;
 }
 
-.footer .logo-icon {
-  color: var(--teal);
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .footer .logo-text {
@@ -1053,8 +1136,108 @@ button {
 
 
 /* =============================================
-   FLOATING WHATSAPP BUTTON
+   MODAL
    ============================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 31, 60, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-overlay.active .modal-container {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--navy);
+}
+
+.modal-header {
+  background: var(--teal);
+  padding: 24px 32px;
+  color: var(--white);
+}
+
+.modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.modal-header p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.modal-body {
+  padding: 32px;
+}
+
+.modal-footer {
+  padding: 0 32px 32px;
+}
+
+.btn-form-submit {
+  width: 100%;
+  background: var(--wa-green);
+  color: var(--white);
+  padding: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.btn-form-submit:hover {
+  background: var(--wa-dark);
+}
+
+/* Floating buttons adjustment for z-index */
+.float-call, .float-wa {
+  z-index: 200;
+}
 .float-call {
   position: fixed;
   bottom: 92px;
@@ -1105,8 +1288,8 @@ button {
    RESPONSIVE — TABLET (600px+)
    ============================================= */
 @media (min-width: 600px) {
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
+  .service-card {
+    width: calc(50% - 10px);
   }
 
   .hero-img {
@@ -1118,9 +1301,7 @@ button {
   }
 
   .wa-banner-inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -1170,8 +1351,8 @@ button {
   }
 
   /* Services */
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .service-card {
+    width: calc(33.333% - 14px);
   }
 
   /* How it works */
@@ -1192,7 +1373,7 @@ button {
 
   /* Contact */
   .contact-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     align-items: start;
   }
 
@@ -1206,5 +1387,7 @@ button {
    RESPONSIVE — LARGE (1100px+)
    ============================================= */
 @media (min-width: 1100px) {
-  /* Services grid remains 3 columns for 9 cards layout */
+  .service-card {
+    width: calc(25% - 15px);
+  }
 }

@@ -1,75 +1,119 @@
-/* =============================================
-   MALIK COOL MASTER — main.js
-   ============================================= */
+/**
+ * Malik Cool Master - main.js
+ * Handles Modal, Mobile Menu, and WhatsApp Inquiry Forms
+ */
 
-// ---------- HAMBURGER MENU ----------
-const hamburger  = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-
-hamburger.addEventListener('click', () => {
-  const isOpen = mobileMenu.classList.toggle('open');
-  hamburger.classList.toggle('open', isOpen);
-  hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-});
-
-// Close mobile menu when any link is tapped
-document.querySelectorAll('.mob-link').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-  });
-});
-
-
-// ---------- FAQ ACCORDION ----------
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    const answer = btn.nextElementSibling;
-
-    // Close all others
-    document.querySelectorAll('.faq-q').forEach(other => {
-      other.setAttribute('aria-expanded', 'false');
-      other.nextElementSibling.style.maxHeight = null;
-    });
-
-    // Toggle clicked
-    if (!isOpen) {
-      btn.setAttribute('aria-expanded', 'true');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
-});
-
-
-// ---------- NAVBAR SCROLL SHADOW ----------
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 10) {
-    navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.25)';
-  } else {
-    navbar.style.boxShadow = 'none';
-  }
-}, { passive: true });
-// ---------- HERO SLIDESHOW ----------
-function initHeroSlideshow() {
-  const track = document.querySelector('.slideshow-track');
-  const slides = document.querySelectorAll('.hero-slideshow .hero-img');
-  if (!track || slides.length <= 1) return;
-  
-  let currentSlide = 0;
-  const slideInterval = 4000;
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  setInterval(nextSlide, slideInterval);
-}
-
-
-// ---------- INITIALIZE ----------
 document.addEventListener('DOMContentLoaded', () => {
-  initHeroSlideshow();
+  // --- MOBILE MENU ---
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobLinks = document.querySelectorAll('.mob-link');
+
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+  }
+
+  mobLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // --- SLIDESHOW ---
+  const track = document.querySelector('.slideshow-track');
+  const slides = document.querySelectorAll('.hero-img');
+  let currentSlide = 0;
+
+  if (track && slides.length > 0) {
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }, 4000);
+  }
+
+  // --- INQUIRY FORMS & MODAL ---
+  const modalOverlay = document.getElementById('modalOverlay');
+  const closeModal = document.getElementById('closeModal');
+  const modalForm = document.getElementById('modalForm');
+  const modalServiceInput = document.getElementById('modalServiceInput');
+  const modalTitle = document.getElementById('modalTitle');
+  const openModalBtns = document.querySelectorAll('.open-modal-btn');
+
+  // Open Modal
+  openModalBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const service = btn.getAttribute('data-service');
+      modalServiceInput.value = service;
+      modalTitle.textContent = `Booking: ${service}`;
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scroll
+    });
+  });
+
+  // Close Modal
+  const hideModal = () => {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  if (closeModal) {
+    closeModal.addEventListener('click', hideModal);
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) hideModal();
+    });
+  }
+
+  // --- WHATSAPP REDIRECTION LOGIC ---
+  const WHATSAPP_NUMBER = "917669141312";
+
+  const handleFormSubmit = (e, formType) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const name = formData.get('name');
+    const location = formData.get('location');
+    const service = formData.get('service');
+    const message = formData.get('message') || "";
+
+    let whatsappMsg = `Hi Malik Cool Master, I need to book a service.
+    
+*Name:* ${name}
+*Location:* ${location}
+*Service:* ${service}`;
+
+    if (message) {
+      whatsappMsg += `\n*Details:* ${message}`;
+    }
+
+    const encodedMsg = encodeURIComponent(whatsappMsg);
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+
+    window.open(waUrl, '_blank');
+    
+    // Close modal if it was a modal submission
+    if (formType === 'modal') hideModal();
+    e.target.reset();
+  };
+
+  if (modalForm) {
+    modalForm.addEventListener('submit', (e) => handleFormSubmit(e, 'modal'));
+  }
+
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => handleFormSubmit(e, 'contact'));
+  }
+
+  // --- REVIEWS TICKER DUPLICATION (for seamless loop) ---
+  const reviewsTrack = document.querySelector('.reviews-track');
+  if (reviewsTrack) {
+    const originalContent = reviewsTrack.innerHTML;
+    reviewsTrack.innerHTML = originalContent + originalContent;
+  }
 });
