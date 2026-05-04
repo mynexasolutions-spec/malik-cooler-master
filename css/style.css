@@ -340,7 +340,11 @@ textarea.form-input {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 4px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 110;
 }
 
 .hamburger span {
