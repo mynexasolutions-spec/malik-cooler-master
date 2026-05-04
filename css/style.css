@@ -602,7 +602,7 @@ textarea.form-input {
 
 .service-img {
   width: 100%;
-  height: 210px;
+  height: 250px;
   border-radius: 0;
   object-fit: cover;
 }
@@ -1353,6 +1353,10 @@ textarea.form-input {
   /* Services */
   .service-card {
     width: calc(33.333% - 14px);
+  }
+
+  .service-img {
+    height: 210px;
   }
 
   /* How it works */
