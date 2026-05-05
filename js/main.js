@@ -110,6 +110,33 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', (e) => handleFormSubmit(e, 'contact'));
   }
 
+  // --- FAQ ACCORDION ---
+  const faqQuestions = document.querySelectorAll('.faq-q');
+
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+      const expanded = question.getAttribute('aria-expanded') === 'true' || false;
+      const answer = question.nextElementSibling;
+
+      // Close other open FAQ items (optional, but cleaner)
+      faqQuestions.forEach(otherQ => {
+        if (otherQ !== question) {
+          otherQ.setAttribute('aria-expanded', 'false');
+          otherQ.nextElementSibling.style.maxHeight = null;
+        }
+      });
+
+      // Toggle current item
+      question.setAttribute('aria-expanded', !expanded);
+      
+      if (!expanded) {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      } else {
+        answer.style.maxHeight = null;
+      }
+    });
+  });
+
   // --- REVIEWS TICKER DUPLICATION (for seamless loop) ---
   const reviewsTrack = document.querySelector('.reviews-track');
   if (reviewsTrack) {
